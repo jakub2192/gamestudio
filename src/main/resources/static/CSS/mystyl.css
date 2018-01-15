@@ -1,0 +1,47 @@
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:active {
+	text-decoration: none;
+}
+
+
+html {
+	font-size: 5em;
+}
+
+#newGame {
+	font-size: 0.3em;
+	color: black;
+}
+
+.table {
+	line-height: 1em;
+	table-layout: fixed;
+	width:7em;
+	text-align: center;
+}
+
+td, tr {
+	border-style: double;
+	border-style: solid;
+	
+}
+
+.tile {
+	color: black;
+}
+
+.setToRight{
+	text-align: right;
+}
+

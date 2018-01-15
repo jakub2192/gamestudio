@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="css/minesTable.css" />
+<link rel="stylesheet" href="css/normalize.css" />
+<link rel="stylesheet" href="css/bootstrap.css" />
+
+<meta charset="ISO-8859-1"></meta>
+<title>Minesweeper</title>
+</head>
+<body>
+	<header>
+
+		<div th:replace="fragments::header" />
+		<div th:replace="fragments::nice_footer" />
+		<h2>Minesweeper</h2>
+
+	</header>
+	<span th:if="${not @userController.logged}">Log in to rate.</span><span th:if="${@userController.logged}"> Rate this Game :
+		<a id="frmAddRating" href='/addRating_mines?value=1' ><img src="pictures/rating-icon.png" title="favorite1" alt="favorite"/></a>
+		<a id="frmAddRating" href='/addRating_mines?value=2' ><img src="pictures/rating-icon.png" title="favorite2" alt="favorite"/></a>
+		<a id="frmAddRating" href='/addRating_mines?value=3' ><img src="pictures/rating-icon.png" title="favorite3" alt="favorite"/></a>
+	    <a id="frmAddRating" href='/addRating_mines?value=4' ><img src="pictures/rating-icon.png" title="favorite4" alt="favorite"/></a>
+	   <a id="frmAddRating" href='/addRating_mines?value=5' ><img src="pictures/rating-icon.png" title="favorite5" alt="favorite"/></a>
+		
+	</span>
+	
+
+	<div th:replace="fragments::rating_mines" />
+
+<span th:if="${not @userController.logged}">Log in to add favorite.</span><span th:if="${@userController.logged}">
+Your rating is : <span th:text='${value}'/>
+<br/>
+	Favorite		
+<a href='/addFavorite_mines'>
+<span th:if="${favorite}">
+   <img src="pictures/favorite1.png" title="favorite" alt="favorite"/>
+</span>
+		<span th:if="${not favorite}">
+		<img src="pictures/favorite2.png" title="favorite" alt="favorite"/>
+		</span>
+		</a>
+</span>
+
+
+
+	<p th:utext='${minesController.render()}' />
+<div class='center'>
+	<p th:utext='${minesController.message}' />
+</div>
+
+	<div class='buttons'>
+		<button onclick="window.location.href='/mines'">New Game</button>
+		<button onclick="window.location.href='/mines_easy'">Easy</button>
+		<button onclick="window.location.href='/mines_hard'">Hard</button>
+		<button onclick="window.location.href='/mines_mark'">
+			Action : <span th:if="${minesController.marking}">Mark</span> <span
+				th:if="${not minesController.marking}">Open</span>
+		</button>
+	</div>
+	<br />
+	<hr />
+	<div class="container">
+		<div class="row">
+			<div class="col-4">
+				<h3>Top Scores</h3>
+				<table class="scoreTable">
+					<tbody>
+						<tr>
+							<th>Player</th>
+							<th>Score</th>
+						</tr>
+						<tr th:each='score : ${scores}'>
+
+							<td th:text='${score.username}' />
+							<td th:text='${score.value}' />
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<div class="col-4">
+		
+				<h3>Comments</h3>
+					<div class='textArea'>
+				<table class="commentTable">
+					<tbody>
+						<tr>
+							<th>Player</th>
+							<th>Comment</th>
+							<th>Created</th>
+						</tr>
+						<tr  th:each='comment : ${comment}'>
+
+							<td th:text='${comment.username}' />
+							<td th:text='${comment.content}' />
+							<td th:text='${comment.createdOn}' />
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			</div>
+			<div class="col-4">
+				<span th:if="${not @userController.logged}">Log in to comment.</span><span th:if="${@userController.logged}">
+					<form id="frmNewComment" action='/addComment_mines' method='post'>
+						<input type="text" name="content" placeholder="Enter comment" />
+
+						<input type='submit' value='Save Comment' />
+					</form>
+				</span>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

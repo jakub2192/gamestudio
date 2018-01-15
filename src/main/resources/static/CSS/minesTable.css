@@ -1,0 +1,99 @@
+.center {
+	margin: auto;
+	border-collapse: collapse;
+	line-height: 0;
+text-align: center;
+}
+.textArea {
+
+  overflow:hidden;
+  height:250px;
+  max-height:250px;
+  overflow-y: scroll;
+}
+
+div.pic{
+	
+	background-image:url("/pictures/guess.jpg");
+	background-position:center;	
+	text-align: center;
+vertical-align: top;
+ 
+    background-repeat: no-repeat;
+
+}
+
+.frmAsk{
+	text-align: center;
+}
+.difficultSize{
+	font-size: 2em;
+	text-align: center;
+	color: navy;
+}
+
+.centerPuzzle , table.centerPuzzle td  {
+	margin: auto;
+border: solid;
+text-align: center;
+
+}
+table.centerPuzzle td{
+	width: 3em;
+	height: 3em;
+
+}
+
+
+table.centerSudoku {
+  margin:1em auto;
+}
+table.centerSudoku td {
+  height:30px;
+  width:30px;
+  border:1px solid;
+  text-align:center;
+}
+table.centerSudoku td:first-child {
+  border-left:solid;
+}
+table.centerSudoku td:nth-child(3n) {
+  border-right:solid ;
+}
+table.centerSudoku tr:first-child {
+  border-top:solid;
+}
+table.centerSudoku tr:nth-child(3n) td {
+  border-bottom:solid ;
+}
+
+.text{
+	color: black;
+}
+
+.buttons {
+	text-align: center;
+}
+
+table.scoreTable td, table.scoreTable tr, table.scoreTable th {
+	border: thin solid black;
+	height: 1.5em;
+	width: 70%;
+	text-align: left;
+}
+
+table.commentTable td, table.commentTable tr, table.commentTable th {
+	border: thin solid black;
+	height: 1.5em;
+	width: 50%;
+	text-align: left;
+
+}
+
+
+#newComment {
+	width: 100%;
+	padding: 12px 20px;
+	box-sizing: border-box;
+	resize: none;
+}

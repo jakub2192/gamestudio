@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="css/minesTable.css" />
+<link rel="stylesheet" href="css/normalize.css" />
+<link rel="stylesheet" href="css/bootstrap.css" />
+
+<meta charset="ISO-8859-1"></meta>
+<title>Sudoku</title>
+</head>
+<body>
+	<header>
+
+		<div th:replace="fragments::header" />
+		<div th:replace="fragments::nice_footer" />
+		<h2>Sudoku</h2>
+
+	</header>
+	<span th:if="${not @userController.logged}">Log in to rate.</span><span th:if="${@userController.logged}"> Rate this Game :
+		<a id="frmAddRating" href='/addRating_sudoku?value=1' ><img src="pictures/rating-icon.png" title="favorite1" alt="favorite"/></a>
+		<a id="frmAddRating" href='/addRating_sudoku?value=2' ><img src="pictures/rating-icon.png" title="favorite2" alt="favorite"/></a>
+		<a id="frmAddRating" href='/addRating_sudoku?value=3' ><img src="pictures/rating-icon.png" title="favorite3" alt="favorite"/></a>
+	    <a id="frmAddRating" href='/addRating_sudoku?value=4' ><img src="pictures/rating-icon.png" title="favorite4" alt="favorite"/></a>
+	   <a id="frmAddRating" href='/addRating_sudoku?value=5' ><img src="pictures/rating-icon.png" title="favorite5" alt="favorite"/></a>
+		
+	</span>
+
+	<div th:replace="fragments::rating_sudoku" />
+
+<span th:if="${not @userController.logged}">Log in to add favorite.</span><span th:if="${@userController.logged}">
+Your rating is : <span th:text='${value}'/>
+<br/>
+	Favorite		
+<a href='/addFavorite_sudoku'>
+<span th:if="${favorite}">
+   <img src="pictures/favorite1.png" title="favorite" alt="favorite"/>
+</span>
+		<span th:if="${not favorite}">
+		<img src="pictures/favorite2.png" title="favorite" alt="favorite"/>
+		</span>
+		</a>
+</span>
+<div class='buttons'>
+		<button onclick="window.location.href='/sudoku_setBack'">Step Back</button>
+		</div>
+
+
+	<table class='centerSudoku'>
+	
+<tr><td>
+<a href='/sudoku_set?value=1'>1</a>
+</td>
+<td>
+<a href='/sudoku_set?value=2'>2</a>
+</td>
+<td>
+<a href='/sudoku_set?value=3'>3</a>
+</td>
+<td>
+<a href='/sudoku_set?value=4'>4</a>
+</td>
+<td>
+<a href='/sudoku_set?value=5'>5</a>
+</td>
+<td>
+<a href='/sudoku_set?value=6'>6</a>
+</td>
+<td>
+<a href='/sudoku_set?value=7'>7</a>
+</td>
+<td>
+<a href='/sudoku_set?value=8'>8</a>
+</td>
+<td>
+<a href='/sudoku_set?value=9'>9</a>
+</td>
+</tr>
+</table>
+
+
+<span th:utext='${sudokuController.render()}' />
+ 	 
+	<div class='buttons'>
+		<button onclick="window.location.href='/sudoku'">New Game</button>
+		<span th:text='${@sudokuController.checkMessage}' />
+		
+	</div>
+	<br />
+	<hr />
+	<div class="container">
+		<div class="row">
+			<div class="col-4">
+				<h3>Top Scores</h3>
+				<table class="scoreTable">
+					<tbody>
+						<tr>
+							<th>Player</th>
+							<th>Score</th>
+						</tr>
+						<tr th:each='score : ${scores}'>
+
+							<td th:text='${score.username}' />
+							<td th:text='${score.value}' />
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<div class="col-4">
+
+				<h3>Comments</h3>
+							<div class='textArea'>
+				<table class="commentTable">
+					<tbody>
+						<tr>
+							<th>Player</th>
+							<th>Comment</th>
+							<th>Created</th>
+						</tr>
+						<tr th:each='comment : ${comment}'>
+
+							<td th:text='${comment.username}' />
+							<td th:text='${comment.content}' />
+							<td th:text='${comment.createdOn}' />
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			</div>
+			<div class="col-4">
+				<span th:if="${not @userController.logged}">Log in to comment.</span><span th:if="${@userController.logged}">
+					<form id="frmNewComment" action='/addComment_sudoku' method='post'>
+						<input type="text" name="content" placeholder="Enter comment" />
+
+						<input type='submit' value='Save Comment' />
+					</form>
+				</span>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

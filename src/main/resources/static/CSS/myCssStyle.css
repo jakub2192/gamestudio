@@ -1,0 +1,59 @@
+
+body{
+	background: url("../pictures/background.jpeg") no-repeat center center fixed;
+	-moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+html {
+    font-size: 100%;
+    font-family: "Roboto", sans-serif;
+    color: black;
+}
+.right{
+align-items: flex-end;
+}
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: olive;
+}
+h1, h2{
+	border-radius: 1rem;
+    padding:1.5rem;
+    text-align:center;
+
+}
+
+h3{
+	border-radius: 1rem;
+	text-align: center;
+}
+h4{
+border-radius: 1rem;
+    padding:1.5rem;
+    text-align:center;
+}
+
+
+select{
+	background-color: silver;
+}
+
+th{
+	padding: 0.5em;
+}
+li{
+	padding-left: 2em;
+}
+#frmNewScore{
+	text-align: center;
+}
+
+.loginStyle{
+	border: solid;
+	border-color: white;
+}
+
+
