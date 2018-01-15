@@ -62,15 +62,11 @@ loginMessage= "";
 	}
 
 	@RequestMapping("/register")
-	public String register(Player player, String password_again, String login, Model model) {
-		if (!playerService.isPlayer(login)) {
-			if (password_again.equals(player.getPassword())) {
+	public String register(Player player, String login, Model model) {
+		if (!playerService.isPlayer(login)) {			
 				playerService.register(player);
 				loginMessage = "";
 				login(player, model);
-			} else {
-				loginMessage = "Paswords don't Match!!";
-			}
 		} else {
 			loginMessage = "Login already exists!!";
 		}

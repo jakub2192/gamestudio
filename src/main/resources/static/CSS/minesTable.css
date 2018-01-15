@@ -45,25 +45,25 @@ table.centerPuzzle td{
 }
 
 
-table.centerSudoku {
+.centerSudoku {
   margin:1em auto;
 }
-table.centerSudoku td {
+.centerSudoku td {
   height:30px;
   width:30px;
   border:1px solid;
   text-align:center;
 }
-table.centerSudoku td:first-child {
+.centerSudoku td:first-child {
   border-left:solid;
 }
-table.centerSudoku td:nth-child(3n) {
+.centerSudoku td:nth-child(3n) {
   border-right:solid ;
 }
-table.centerSudoku tr:first-child {
+.centerSudoku tr:first-child {
   border-top:solid;
 }
-table.centerSudoku tr:nth-child(3n) td {
+.centerSudoku tr:nth-child(3n) td {
   border-bottom:solid ;
 }
 

@@ -34,9 +34,8 @@ public class puzzleController {
 	Field field;
 	private int difficult;
 	private int finalScore;
-
+	private String currentGame = "puzzle";
 	private String message = "";
-
 
 	public String getMessage() {
 		return message;
@@ -51,10 +50,10 @@ public class puzzleController {
 
 			if (field.isSolved()) {
 				message = "Solved";
-				if(userController.isLogged()) {
+				if (userController.isLogged()) {
 					saveScore();
 				}
-				
+
 			}
 		} catch (NumberFormatException e) {
 			field = new Field(4, 4);
@@ -63,43 +62,44 @@ public class puzzleController {
 		}
 
 		fillMethod(model);
-		return "puzzle";
+		return currentGame;
 	}
 
 	@RequestMapping("/addComment_puzzle")
 	public String addComment(@RequestParam(value = "content", required = false) String content, Model model) {
 		if (!"".equals(content)) {
-			commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), "puzzle", content));
+			commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), currentGame, content));
 		}
 
 		fillMethod(model);
-		return "/puzzle";
+		return currentGame;
 	}
 
 	@RequestMapping("/addRating_puzzle")
 	public String addRating(@RequestParam(value = "value", required = false) String value, Model model) {
 		int rating = Integer.parseInt(value);
-		ratingService.setRating(new Rating(userController.getLoggedPlayer().getLogin(), "puzzle", rating));
+		ratingService.setRating(new Rating(userController.getLoggedPlayer().getLogin(), currentGame, rating));
 		fillMethod(model);
-		return "/puzzle";
+		return currentGame;
 	}
 
 	@RequestMapping("/addFavorite_puzzle")
 	public String addFavorite(Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "puzzle"));
+		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame));
 		fillMethod(model);
-
-		return "/puzzle";
+		return currentGame;
 	}
 
 	private void fillMethod(Model model) {
 		model.addAttribute("puzzleController", this);
-		model.addAttribute("scores", scoreService.getTopScores("puzzle"));
-		model.addAttribute("comment", commentService.getComments("puzzle"));
-		model.addAttribute("rating", ratingService.getAverageRating("puzzle"));
+		model.addAttribute("scores", scoreService.getTopScores(currentGame));
+		model.addAttribute("comment", commentService.getComments(currentGame));
+		model.addAttribute("rating", ratingService.getAverageRating(currentGame));
 		if (userController.isLogged()) {
-			model.addAttribute("value", ratingService.getValue(userController.getLoggedPlayer().getLogin(), "puzzle"));
-			model.addAttribute("favorite",favoriteService.isFavorite(userController.getLoggedPlayer().getLogin(), "puzzle"));
+			model.addAttribute("value",
+					ratingService.getValue(userController.getLoggedPlayer().getLogin(), currentGame));
+			model.addAttribute("favorite",
+					favoriteService.isFavorite(userController.getLoggedPlayer().getLogin(), currentGame));
 		}
 	}
 
@@ -108,15 +108,15 @@ public class puzzleController {
 		field = new Field(3, 3);
 		fillMethod(model);
 		difficult = 1;
-		return "/puzzle";
+		return currentGame;
 	}
 
 	@RequestMapping("/puzzle_hard")
 	public String mines_hard(Model model) {
 		field = new Field(5, 5);
 		fillMethod(model);
-		difficult= 3;
-		return "/puzzle";
+		difficult = 3;
+		return currentGame;
 	}
 
 	public String render() {
@@ -145,23 +145,24 @@ public class puzzleController {
 
 		return sb.toString();
 	}
+
 	private void saveScore() {
-		if(field.isSolved()) {			
+		if (field.isSolved()) {
 			int time = (int) (field.getEndTime() - field.getStartTime()) / 1000;
-			if(difficult == 1) {
+			if (difficult == 1) {
 				finalScore = 300 - time;
 			}
-			if(difficult == 2) {
+			if (difficult == 2) {
 				finalScore = 500 - time;
 			}
-			if(difficult == 3) {
+			if (difficult == 3) {
 				finalScore = 1000 - time;
-			}			
+			}
 			Score score = new Score();
-			score.setGame("puzzle");
+			score.setGame(currentGame);
 			score.setUsername(userController.getLoggedPlayer().getLogin());
 			score.setValue(finalScore);
 			scoreService.addScore(score);
 		}
-}
+	}
 }

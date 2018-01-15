@@ -1,28 +1,32 @@
-
-var password = document.getElementByName("password");
-var confirm_password = document.getElementByName("password_again");
-
-var email = document.getElementByName("email");
-var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-function validatePassword(){
-  if(password.value != confirm_again.value) {
-    confirm_password.setCustomValidity("Passwords Don't Match");
-  } else {
-    confirm_password.setCustomValidity('');
+function checkPassword(str)
+  {
+    var re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    return re.test(str);
   }
-}
 
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;
-
-
-function validateEmail() {
-    var x = document.forms["myForm"]["email"].value;
-    var atpos = x.indexOf("@");
-    var dotpos = x.lastIndexOf(".");
-    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
-        window.alert("Not a valid e-mail address");
-        return false;
+  function checkForm(form)
+  {
+    if(form.login.value == "") {
+      alert("Error: Username cannot be blank!");
+      form.login.focus();
+      return false;
     }
-}
+    re = /^\w+$/;
+    if(!re.test(form.login.value)) {
+      alert("Error: Username must contain only letters, numbers and underscores!");
+      form.login.focus();
+      return false;
+    }
+    if(form.password.value != "" && form.password.value == form.password_again.value) {
+      if(!checkPassword(form.password.value)) {
+        alert("The password you have entered is not valid!");
+        form.password.focus();
+        return false;
+      }
+    } else {
+      alert("Error: Passwords don't match!!");
+      form.password.focus();
+      return false;
+    }
+    return true;
+  }

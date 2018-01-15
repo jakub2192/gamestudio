@@ -42,11 +42,11 @@ int number;
 			hint = "You Guess the Number!!";
 			endTime = System.currentTimeMillis();		
 		}
-		if(inputNumber > randomNumber) {
-			hint = "Your guess," + inputNumber +",is too High";
+		if(number > randomNumber) {
+			hint = "Your guess," + number +",is too High";
 		}
-		if(inputNumber < randomNumber) {
-			hint = "Your guess," + inputNumber +",is too Low";
+		if(number < randomNumber) {
+			hint = "Your guess," + number +",is too Low";
 		}
 			
 	}	
