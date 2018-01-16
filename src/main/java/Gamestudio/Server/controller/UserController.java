@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
+import Gamestudio.entity.Comment;
 import Gamestudio.entity.Player;
 import Gamestudio.service.FavoriteService;
 import Gamestudio.service.PlayerService;
@@ -41,6 +43,7 @@ public class UserController {
 		fillMethod(model);
 		return "index";
 	}
+
 
 	private void fillMethod(Model model) {
 		model.addAttribute("avgRatingMines", ratingService.getAverageRating("mines"));

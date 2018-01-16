@@ -20,7 +20,7 @@ import Gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class puzzleController {
+public class puzzleController extends AbstractGameController {
 	@Autowired
 	private ScoreService scoreService;
 	@Autowired
@@ -89,20 +89,6 @@ public class puzzleController {
 		fillMethod(model);
 		return currentGame;
 	}
-
-	private void fillMethod(Model model) {
-		model.addAttribute("puzzleController", this);
-		model.addAttribute("scores", scoreService.getTopScores(currentGame));
-		model.addAttribute("comment", commentService.getComments(currentGame));
-		model.addAttribute("rating", ratingService.getAverageRating(currentGame));
-		if (userController.isLogged()) {
-			model.addAttribute("value",
-					ratingService.getValue(userController.getLoggedPlayer().getLogin(), currentGame));
-			model.addAttribute("favorite",
-					favoriteService.isFavorite(userController.getLoggedPlayer().getLogin(), currentGame));
-		}
-	}
-
 	@RequestMapping("/puzzle_easy")
 	public String mines_easy(Model model) {
 		field = new Field(3, 3);
@@ -164,5 +150,10 @@ public class puzzleController {
 			score.setValue(finalScore);
 			scoreService.addScore(score);
 		}
+	}
+
+	@Override
+	protected String getGameName() {
+		return "puzzle";
 	}
 }

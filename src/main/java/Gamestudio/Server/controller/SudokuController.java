@@ -21,18 +21,13 @@ import Gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class SudokuController {
+public class SudokuController extends AbstractGameController{
 
 	@Autowired
 	private ScoreService scoreService;
 	@Autowired
 	private UserController userController;
-	@Autowired
-	private RatingService ratingService;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private FavoriteService favoriteService;
+	
 
 	private boolean marking;
 	private String message;
@@ -42,7 +37,6 @@ public class SudokuController {
 	private Field fields;
 	private long startTime;
 	private long endTime;
-	private String currentGame = "sudoku";
 	
 
 	public String getCheckMessage() {
@@ -71,26 +65,9 @@ public class SudokuController {
 		game = new Game();
 		fillMethod(model);
 		checkMessage = "";
-		return currentGame;
+		return getGameName();
 	}
 
-	@RequestMapping("/addComment_sudoku")
-	public String addComment(@RequestParam(value = "content", required = false) String content, Model model) {
-		if (!"".equals(content)) {
-			commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(),currentGame, content));
-		}
-
-		fillMethod(model);
-		return "/sudoku";
-	}
-
-	@RequestMapping("/addRating_sudoku")
-	public String addRating(@RequestParam(value = "value", required = false) String value, Model model) {
-		int rating = Integer.parseInt(value);
-		ratingService.setRating(new Rating(userController.getLoggedPlayer().getLogin(), currentGame, rating));
-		fillMethod(model);
-		return "/sudoku";
-	}
 
 	@RequestMapping("/sudoku_set")
 	public String setValue(@RequestParam(value = "value", required = false) String value, Model model) {
@@ -99,14 +76,14 @@ public class SudokuController {
 
 		fillMethod(model);
 		setCheckMessage("");
-		return "/sudoku";
+		return getGameName();
 	}
 
 	@RequestMapping("/sudoku_setBack")
 	public String setValueBack(Model model) {
 		game.setNumber(fields.getFieldX(), fields.getFieldY(), 0);
 		fillMethod(model);
-		return currentGame;
+		return getGameName();
 	}
 
 	@RequestMapping("/sudoku_setNumber")
@@ -121,17 +98,8 @@ public class SudokuController {
 		}
 
 		fillMethod(model);
-		return currentGame;
+		return getGameName();
 	}
-
-	@RequestMapping("/addFavorite_sudoku")
-	public String addFavorite(Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame));
-		fillMethod(model);
-
-		return currentGame;
-	}
-
 	public String render() {
 		startTime = System.currentTimeMillis();
 		StringBuilder sb = new StringBuilder();
@@ -163,19 +131,6 @@ public class SudokuController {
 		return sb.toString();
 	}
 
-	private void fillMethod(Model model) {
-		model.addAttribute("sudokuController", this);
-		model.addAttribute("scores", scoreService.getTopScores(currentGame));
-		model.addAttribute("comment", commentService.getComments(currentGame));
-		model.addAttribute("rating", ratingService.getAverageRating(currentGame));
-		if (userController.isLogged()) {
-			model.addAttribute("value", ratingService.getValue(userController.getLoggedPlayer().getLogin(), currentGame));
-			model.addAttribute("favorite",
-					favoriteService.isFavorite(userController.getLoggedPlayer().getLogin(), currentGame));
-		}
-
-	}
-
 	private boolean isSolved() {
 		int countNumbers = 0;
 		for (int row = 0; row < 9; row++) {
@@ -197,11 +152,16 @@ public class SudokuController {
 		int time = (int) (endTime - startTime) / 1000;
 		int finalScore = 1000 - time;
 		Score score = new Score();
-		score.setGame(currentGame);
+		score.setGame(getGameName());
 		score.setUsername(userController.getLoggedPlayer().getLogin());
 		score.setValue(finalScore);
 		scoreService.addScore(score);
 	}
+	}
+
+	@Override
+	protected String getGameName() {
+		return "sudoku";
 	}
 
 }

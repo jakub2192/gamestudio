@@ -24,21 +24,14 @@ import Gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class MinesController {
+public class MinesController extends AbstractGameController {
 	private Field field;
 	@Autowired
 	private ScoreService scoreService;
 	@Autowired
 	private UserController userController;
-	@Autowired
-	private RatingService ratingService;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private FavoriteService favoriteService;
-
 	private boolean marking;
-	private String message;
+	protected String message;
 	private int difficult;
 	private int finalScore;
 
@@ -54,7 +47,7 @@ public class MinesController {
 	public String mines(Model model) {
 		marking = !marking;
 		fillMethod(model);
-		return "mines";
+		return getGameName();
 	}
 
 	@RequestMapping("/mines")
@@ -62,25 +55,7 @@ public class MinesController {
 			@RequestParam(value = "column", required = false) String column, Model model) {
 		processCommand(row, column);
 		fillMethod(model);
-		return "mines";
-	}
-
-	@RequestMapping("/addComment_mines")
-	public String addComment(@RequestParam(value = "content", required = false) String content, Model model) {
-		if (!"".equals(content)) {
-			commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), "mines", content));
-		}
-
-		fillMethod(model);
-		return "/mines";
-	}
-
-	@RequestMapping("/addRating_mines")
-	public String addRating(@RequestParam(value = "value", required = false) String value, Model model) {
-		int rating = Integer.parseInt(value);
-		ratingService.setRating(new Rating(userController.getLoggedPlayer().getLogin(), "mines", rating));
-		fillMethod(model);
-		return "/mines";
+		return getGameName();
 	}
 
 	@RequestMapping("/mines_easy")
@@ -88,7 +63,7 @@ public class MinesController {
 		field = new Field(5, 5, 5);
 		fillMethod(model);
 		difficult = 1;
-		return "/mines";
+		return getGameName();
 	}
 
 	@RequestMapping("/mines_hard")
@@ -96,17 +71,8 @@ public class MinesController {
 		field = new Field(15, 15, 20);
 		fillMethod(model);
 		difficult = 3;
-		return "/mines";
+		return getGameName();
 	}
-
-	@RequestMapping("/addFavorite_mines")
-	public String addFavorite(Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), "mines"));
-		fillMethod(model);
-
-		return "/mines";
-	}
-
 	public String render() {
 
 		StringBuilder sb = new StringBuilder();
@@ -155,19 +121,6 @@ public class MinesController {
 		message = "";
 	}
 
-	private void fillMethod(Model model) {
-		model.addAttribute("minesController", this);
-		model.addAttribute("scores", scoreService.getTopScores("mines"));
-		model.addAttribute("comment", commentService.getComments("mines"));
-		model.addAttribute("rating", ratingService.getAverageRating("mines"));
-		if (userController.isLogged()) {
-			model.addAttribute("value", ratingService.getValue(userController.getLoggedPlayer().getLogin(), "mines"));
-			model.addAttribute("favorite",
-					favoriteService.isFavorite(userController.getLoggedPlayer().getLogin(), "mines"));
-		}
-
-	}
-
 	private void processCommand(String row, String column) {
 		try {
 			if (marking) {
@@ -202,11 +155,16 @@ public class MinesController {
 				finalScore = 1000 - time;
 			}
 			Score score = new Score();
-			score.setGame("puzzle");
+			score.setGame(getGameName());
 			score.setUsername(userController.getLoggedPlayer().getLogin());
 			score.setValue(finalScore);
 			scoreService.addScore(score);
 		}
+	}
+
+	@Override
+	protected String getGameName() {
+		return "mines";
 	}
 
 }

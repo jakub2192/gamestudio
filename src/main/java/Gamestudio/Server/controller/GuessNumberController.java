@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
 import Gamestudio.entity.Comment;
-import Gamestudio.entity.Favorite;
-import Gamestudio.entity.Rating;
 import Gamestudio.entity.Score;
 import Gamestudio.game.guessNumber.consoleUI.Field;
 import Gamestudio.service.CommentService;
@@ -20,25 +18,22 @@ import Gamestudio.service.ScoreService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class GuessNumberController {
+public class GuessNumberController extends AbstractGameController {
 	private Field field;
 	private String message;
 	private String difficult;
 	private int difficultScore;
 	int inputInt;
 	private int finalScore;
-	private String currentGame = "guessNumber";
+
 
 	@Autowired
 	private ScoreService scoreService;
 	@Autowired
 	private UserController userController;
 	@Autowired
-	private RatingService ratingService;
-	@Autowired
 	private CommentService commentService;
-	@Autowired
-	private FavoriteService favoriteService;
+
 
 	public String getMessage() {
 		return message = field.getHint();
@@ -55,7 +50,7 @@ public class GuessNumberController {
 		message = "";
 		fillMethod(model);
 		difficultScore = 2;
-		return currentGame;
+		return getGameName();
 	}
 
 	@RequestMapping("/guessNumber_easy")
@@ -64,7 +59,7 @@ public class GuessNumberController {
 		difficult = "1 - 10";
 		fillMethod(model);
 		difficultScore = 1;
-		return currentGame;
+		return getGameName();
 	}
 
 	@RequestMapping("/guessNumber_hard")
@@ -73,17 +68,17 @@ public class GuessNumberController {
 		difficult = "1 - 1000";
 		fillMethod(model);
 		difficultScore = 3;
-		return currentGame;
+		return getGameName();
 	}
 
 	@RequestMapping("/addComment_guess")
 	public String addComment(@RequestParam(value = "content", required = false) String content, Model model) {
 
 		if (!"".equals(content)) {
-			commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), currentGame, content));
+			commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), getGameName(), content));
 		}
 		fillMethod(model);
-		return currentGame;
+		return getGameName();
 	}
 
 	@RequestMapping("/guessNumber_ask")
@@ -103,37 +98,9 @@ public class GuessNumberController {
 
 		}
 		fillMethod(model);
-		return currentGame;
+		return getGameName();
 	}
 
-	@RequestMapping("/addRating_guess")
-	public String addRating(@RequestParam(value = "value", required = false) String value, Model model) {
-		int rating = Integer.parseInt(value);
-		ratingService.setRating(new Rating(userController.getLoggedPlayer().getLogin(), currentGame, rating));
-		fillMethod(model);
-		return currentGame;
-	}
-
-	@RequestMapping("/addFavorite_guess")
-	public String addFavorite(Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), currentGame));
-		fillMethod(model);
-		return currentGame;
-	}
-
-	private void fillMethod(Model model) {
-		model.addAttribute("guessNumberController", this);
-		model.addAttribute("scores", scoreService.getTopScores(currentGame));
-		model.addAttribute("comment", commentService.getComments(currentGame));
-		model.addAttribute("rating", ratingService.getAverageRating(currentGame));
-		if (userController.isLogged()) {
-			model.addAttribute("value",
-					ratingService.getValue(userController.getLoggedPlayer().getLogin(), currentGame));
-			model.addAttribute("favorite",
-					favoriteService.isFavorite(userController.getLoggedPlayer().getLogin(), currentGame));
-		}
-
-	}
 
 	public void saveScore() {
 		int time = (int) (field.getEndTime() - field.getStartTime()) / 1000;
@@ -147,11 +114,16 @@ public class GuessNumberController {
 			finalScore = 1000 - time;
 		}
 		Score score = new Score();
-		score.setGame(currentGame);
+		score.setGame(getGameName());
 		score.setUsername(userController.getLoggedPlayer().getLogin());
 		score.setValue(finalScore);
 		scoreService.addScore(score);
 
+	}
+
+	@Override
+	protected String getGameName() {
+		return "guessNumber";
 	}
 
 }
