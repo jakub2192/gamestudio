@@ -17,7 +17,7 @@ public interface FavoriteService {
 	boolean isFavorite(String username, String game);
 
 
-	List<Game> getFavoriteGames(String player);
+	
 	
 
 }

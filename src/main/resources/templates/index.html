@@ -21,12 +21,14 @@
 	<hr />
 	<span th:if="${@userController.logged}">
 		<h5>Favorite Games</h5>
+<!-- 		<span th:replace="fragments::getGames(favoriteByGame)"/> -->
+		
 		<div class="container">
 			<div class="row">
 				<div class="col-3"></div>
 				<div class="col-9">
 					<table>
-						<th th:each='game : ${favorite1}'>
+						<th th:each='game : ${favoriteByGame}'>
 						<tr>
 							<a th:href='${game.ident}'><img
 								th:src='${"pictures/" + game.ident + ".jpg" }' height="100"
@@ -40,6 +42,8 @@
 		<hr />
 	</span>
 	<h5>All Games</h5>
+	
+<!-- 	<span th:replace="fragments::getGames(games)"/> -->
 	<div class="container" th:each='game : ${games}'>
 		<div class="row">
 

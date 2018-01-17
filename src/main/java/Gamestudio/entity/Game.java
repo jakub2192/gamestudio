@@ -45,7 +45,7 @@ public class Game {
 	public String toString() {
 		return "Game [ident=" + ident + ", name=" + name + ", description=" + description + "]";
 	}
-
+	
 	public double getAvgRating() {
 		return avgRating;
 	}

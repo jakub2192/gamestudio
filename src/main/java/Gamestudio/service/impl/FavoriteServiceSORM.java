@@ -38,11 +38,8 @@ public boolean isFavorite(String username, String game) {
 
 	return false;
 }
-@Override
-public List<Game> getFavoriteGames(String player) {
-	// TODO Auto-generated method stub
-	return null;
-}
+
+
 
 
 

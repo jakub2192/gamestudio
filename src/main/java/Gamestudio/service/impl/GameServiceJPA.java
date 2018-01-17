@@ -22,7 +22,11 @@ public class GameServiceJPA  implements GameService{
 		
 		return entityManager.find(Game.class, ident);
 	}
-
+	@Override
+	public List<Game> getFavoriteGames(String player) {
+		return entityManager.createQuery("SELECT g FROM Game g WHERE EXISTS "
+				+ "(SELECT f FROM Favorite f where g.ident = f.game AND f.username = :player)").setParameter("player", player).getResultList();
+	}
 	
 	@Override
 	public List<Game> getGames() {		
