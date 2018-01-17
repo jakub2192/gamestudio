@@ -10,7 +10,6 @@
 </head>
 <body>
 	<header>
-
 		<div th:replace="fragments::header" />
 		<div th:replace="fragments::nice_footer" />
 		<h2 th:text='${game.name}'/>
@@ -23,13 +22,7 @@
 		
     <div class= 'center'>
      <p th:utext='${controller.message}' />
-     </div>
-	
-	<div class='buttons'>
-		<button onclick="window.location.href='/puzzle'">New Game</button>
-		<button onclick="window.location.href='/puzzle_easy'">Easy</button>
-		<button onclick="window.location.href='/puzzle_hard'">Hard</button>		
-	</div>
+     </div>	
 	<br />
 	<hr />
 	<div class="container">

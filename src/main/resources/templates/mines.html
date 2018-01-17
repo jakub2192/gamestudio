@@ -26,15 +26,6 @@
 	<p th:utext='${controller.message}' />
 </div>
 
-	<div class='buttons'>
-		<button onclick="window.location.href='/mines'">New Game</button>
-		<button onclick="window.location.href='/mines_easy'">Easy</button>
-		<button onclick="window.location.href='/mines_hard'">Hard</button>
-		<button onclick="window.location.href='/mines_mark'">
-			Action : <span th:if="${controller.marking}">Mark</span> <span
-				th:if="${not controller.marking}">Open</span>
-		</button>
-	</div>
 	<br />
 	<hr />
 	<div class="container">
