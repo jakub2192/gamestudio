@@ -1,5 +1,7 @@
 package Gamestudio.Server.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
 import Gamestudio.entity.Comment;
+import Gamestudio.entity.Game;
 import Gamestudio.entity.Player;
 import Gamestudio.service.FavoriteService;
+import Gamestudio.service.GameService;
 import Gamestudio.service.PlayerService;
 import Gamestudio.service.RatingService;
 
@@ -23,6 +27,9 @@ public class UserController {
 	private RatingService ratingService;
 	@Autowired
 	private FavoriteService favoriteService;
+	@Autowired
+	private GameService gameService;
+
 
 	private Player loggedPlayer;
 	private String loginMessage;
@@ -46,12 +53,13 @@ public class UserController {
 
 
 	private void fillMethod(Model model) {
-		model.addAttribute("avgRatingMines", ratingService.getAverageRating("mines"));
-		model.addAttribute("avgRatingPuzzle", ratingService.getAverageRating("puzzle"));
-		model.addAttribute("avgRatingGuess", ratingService.getAverageRating("guessNumber"));
-		model.addAttribute("avgRatingSudoku", ratingService.getAverageRating("sudoku"));
+		List<Game> games = gameService.getGames(); 
+		setRatingToGame(games);
+		
+		model.addAttribute("games", games);
 		if (isLogged()) {
 			model.addAttribute("favorite", favoriteService.getFavorite(loggedPlayer.getLogin()));
+//			model.addAttribute("favorite1", favoriteService.getFavoriteGames(getLoggedPlayer().getLogin()));
 		}
 
 	}
@@ -65,8 +73,8 @@ loginMessage= "";
 	}
 
 	@RequestMapping("/register")
-	public String register(Player player, String login, Model model) {
-		if (!playerService.isPlayer(login)) {			
+	public String register(Player player, Model model) {
+		if (!playerService.isPlayer(player.getLogin())) {			
 				playerService.register(player);
 				loginMessage = "";
 				login(player, model);
@@ -76,7 +84,6 @@ loginMessage= "";
 
 		fillMethod(model);
 		return "/login";
-
 	}
 
 	@RequestMapping("/logout")
@@ -93,5 +100,10 @@ loginMessage= "";
 	public String getLoginMessage() {
 		return loginMessage;
 	}
-
+public void  setRatingToGame(List<Game> games){
+	for (Game game : games) {
+		game.setAvgRating(ratingService.getAverageRating(game.getIdent()));
+	}
+	
+}
 }

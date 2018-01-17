@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import Gamestudio.entity.Favorite;
+import Gamestudio.entity.Game;
 import Gamestudio.service.FavoriteService;
 
 @Transactional
@@ -31,10 +32,13 @@ public class FavoriteServiceJPA implements FavoriteService {
 	}
 
 	@Override
-	public List<Favorite> getFavorite(String username) {
-		return entityManager.createQuery("SELECT f FROM Favorite f WHERE f.username = :username")
-				.setParameter("username", username).getResultList();
+	public List<Game> getFavoriteGames(String player) {
+		return entityManager.createQuery("SELECT g FROM Game g WHERE EXISTS (SELECT f FROM Favorite f where g.ident = f.game and f.username = :player").setParameter("player", player).getResultList();
 	}
+	
+	
+
+	
 	@Override
 	public boolean isFavorite(String username, String game) {
 		try {
@@ -50,6 +54,12 @@ public class FavoriteServiceJPA implements FavoriteService {
 		entityManager.createQuery("DELETE FROM Favorite f WHERE f.username = :username  AND f.game = :game")
 				.setParameter("username", username).setParameter("game", game).executeUpdate();
 
+	}
+
+	@Override
+	public List<Favorite> getFavorite(String username) {
+
+		return null;
 	}
 
 }

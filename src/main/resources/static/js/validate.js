@@ -19,7 +19,7 @@ function checkPassword(str)
     }
     if(form.password.value != "" && form.password.value == form.password_again.value) {
       if(!checkPassword(form.password.value)) {
-        alert("The password you have entered is not valid!");
+        alert("The password you have entered is not valid!Must contain :1 uppercase, 1 lowercase, 1 number!");
         form.password.focus();
         return false;
       }

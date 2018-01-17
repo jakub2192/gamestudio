@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import Gamestudio.entity.Favorite;
+import Gamestudio.entity.Game;
 import Gamestudio.service.FavoriteService;
 
 public class FavoriteServiceRestClient implements FavoriteService {
@@ -39,6 +40,12 @@ public class FavoriteServiceRestClient implements FavoriteService {
 	public boolean isFavorite(String username, String game) {
 	
 		return false;
+	}
+
+	@Override
+	public List<Game> getFavoriteGames(String player) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

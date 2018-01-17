@@ -17,7 +17,7 @@ import Gamestudio.service.RatingService;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
-public class ServiceController  {
+public class ServiceController {
 	@Autowired
 	protected UserController userController;
 	@Autowired
@@ -42,8 +42,8 @@ public class ServiceController  {
 	}
 	
 	@RequestMapping("/addFavorite")
-	public String addFavorite(Favorite favorite, Model model) {
-		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), favorite.getGame()));
-		return "forward:/" + favorite.getGame();
+	public String addFavorite(String game, Model model) {
+		favoriteService.setFavorite(new Favorite(userController.getLoggedPlayer().getLogin(), game));
+		return "forward:/" + game;
 	}
 }

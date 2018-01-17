@@ -29,7 +29,7 @@ Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5
 Your rating is : <span th:text='${value}'/>
 <br/>
 	Favorite		
-<a th:href='${"/addFavorite?game=" + game}'>
+<a th:href='${"/addFavorite?game=" + game.ident}'>
 <span th:if="${favorite}">
    <img src="pictures/favorite1.png" title="favorite" alt="favorite"/>
 </span>
@@ -54,11 +54,11 @@ or
 
 <div th:fragment="addRating_table">
 <span th:if="${not @userController.logged}">Log in to rate.</span><span th:if="${@userController.logged}"> Rate this Game :
-		<a  th:href='${"/addRating?value=1&amp;game=" + game }'><img src="pictures/rating-icon.png" title="favorite1" alt="favorite"/></a>
-		<a  th:href='${"/addRating?value=2&amp;game=" + game }'><img src="pictures/rating-icon.png" title="favorite2" alt="favorite"/></a>
-		<a  th:href='${"/addRating?value=3&amp;game=" + game }'><img src="pictures/rating-icon.png" title="favorite3" alt="favorite"/></a>
-	    <a  th:href='${"/addRating?value=4&amp;game=" + game }'><img src="pictures/rating-icon.png" title="favorite4" alt="favorite"/></a>
-	    <a  th:href='${"/addRating?value=5&amp;game=" + game }'><img src="pictures/rating-icon.png" title="favorite5" alt="favorite"/></a>		
+		<a  th:href='${"/addRating?value=1&amp;game=" + game.ident }'><img src="pictures/rating-icon.png" title="favorite1" alt="favorite"/></a>
+		<a  th:href='${"/addRating?value=2&amp;game=" + game.ident }'><img src="pictures/rating-icon.png" title="favorite2" alt="favorite"/></a>
+		<a  th:href='${"/addRating?value=3&amp;game=" + game.ident }'><img src="pictures/rating-icon.png" title="favorite3" alt="favorite"/></a>
+	    <a  th:href='${"/addRating?value=4&amp;game=" + game.ident }'><img src="pictures/rating-icon.png" title="favorite4" alt="favorite"/></a>
+	    <a  th:href='${"/addRating?value=5&amp;game=" + game.ident }'><img src="pictures/rating-icon.png" title="favorite5" alt="favorite"/></a>		
 	</span>
 </div>
 
@@ -101,13 +101,17 @@ or
 <div th:fragment="addComment_table">
 <span th:if="${not @userController.logged}">Log in to comment.</span><span th:if="${@userController.logged}">
 					<form id="frmNewComment" action='/addComment' method='post'>
- 					<input type="hidden" th:value='${game}' name="game"/> 
+ 					<input type="hidden" th:value='${game.ident}' name="game"/> 
 						<input type="text" name="content" placeholder="Enter comment" />
 
 						<input type='submit' value='Save Comment' />
 					</form>
 				</span>
 </div>
+
+
+
+
 
 </body>
 

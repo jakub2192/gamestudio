@@ -3,6 +3,9 @@ package Gamestudio.service;
 import java.util.List;
 
 import Gamestudio.entity.Favorite;
+import Gamestudio.entity.Game;
+import Gamestudio.entity.Player;
+
 
 public interface FavoriteService {
 
@@ -12,6 +15,9 @@ public interface FavoriteService {
 	List<Favorite> getFavorite(String username);
 
 	boolean isFavorite(String username, String game);
+
+
+	List<Game> getFavoriteGames(String player);
 	
 
 }

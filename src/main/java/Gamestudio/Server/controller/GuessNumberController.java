@@ -22,7 +22,6 @@ public class GuessNumberController extends AbstractGameController {
 	private Field field;
 	private String message;
 	private String difficult;
-	private int difficultScore;
 	int inputInt;
 	private int finalScore;
 
@@ -31,9 +30,6 @@ public class GuessNumberController extends AbstractGameController {
 	private ScoreService scoreService;
 	@Autowired
 	private UserController userController;
-	@Autowired
-	private CommentService commentService;
-
 
 	public String getMessage() {
 		return message = field.getHint();
@@ -49,7 +45,6 @@ public class GuessNumberController extends AbstractGameController {
 		difficult = "1 - 100";
 		message = "";
 		fillMethod(model);
-		difficultScore = 2;
 		return getGameName();
 	}
 
@@ -58,7 +53,6 @@ public class GuessNumberController extends AbstractGameController {
 		field = new Field(10);
 		difficult = "1 - 10";
 		fillMethod(model);
-		difficultScore = 1;
 		return getGameName();
 	}
 
@@ -67,19 +61,9 @@ public class GuessNumberController extends AbstractGameController {
 		field = new Field(1000);
 		difficult = "1 - 1000";
 		fillMethod(model);
-		difficultScore = 3;
 		return getGameName();
 	}
 
-	@RequestMapping("/addComment_guess")
-	public String addComment(@RequestParam(value = "content", required = false) String content, Model model) {
-
-		if (!"".equals(content)) {
-			commentService.addComment(new Comment(userController.getLoggedPlayer().getLogin(), getGameName(), content));
-		}
-		fillMethod(model);
-		return getGameName();
-	}
 
 	@RequestMapping("/guessNumber_ask")
 	public String guessNumber(@RequestParam(value = "guess", required = false) String guess, Model model) {
@@ -104,13 +88,13 @@ public class GuessNumberController extends AbstractGameController {
 
 	public void saveScore() {
 		int time = (int) (field.getEndTime() - field.getStartTime()) / 1000;
-		if (difficultScore == 1) {
+		if ("1-10".equals(difficult)) {
 			finalScore = 300 - time;
 		}
-		if (difficultScore == 2) {
+		if ("1-100".equals(difficult)) {
 			finalScore = 500 - time;
 		}
-		if (difficultScore == 3) {
+		if ("1-1000".equals(difficult)) {
 			finalScore = 1000 - time;
 		}
 		Score score = new Score();

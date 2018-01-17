@@ -47,7 +47,7 @@ public class PlayerServiceJPA implements PlayerService {
 	public boolean isPlayer(String login) {
 		try {
 			 entityManager
-					.createQuery("SELECT p.login FROM Player p WHERE p.login = :login ")
+					.createQuery("SELECT p FROM Player p WHERE p.login = :login ")
 					.setParameter("login", login).getSingleResult();
 		} catch (NoResultException e) {
 			return false;

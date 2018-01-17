@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 
 import Gamestudio.service.CommentService;
 import Gamestudio.service.FavoriteService;
+import Gamestudio.service.GameService;
 import Gamestudio.service.RatingService;
 import Gamestudio.service.ScoreService;
 
@@ -19,12 +20,14 @@ public abstract class AbstractGameController {
 	protected CommentService commentService;
 	@Autowired
 	protected FavoriteService favoriteService;
+	@Autowired
+	protected GameService gameService;
 
 	private String message;
 
 	protected void fillMethod(Model model) {
 		model.addAttribute("controller", this);
-		model.addAttribute("game", getGameName());
+		model.addAttribute("game", gameService.getGame(getGameName()));
 		model.addAttribute("scores", scoreService.getTopScores(getGameName()));
 		model.addAttribute("comment", commentService.getComments(getGameName()));
 		model.addAttribute("rating", ratingService.getAverageRating(getGameName()));

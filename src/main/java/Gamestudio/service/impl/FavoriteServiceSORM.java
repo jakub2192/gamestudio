@@ -3,6 +3,7 @@ package Gamestudio.service.impl;
 import java.util.List;
 
 import Gamestudio.entity.Favorite;
+import Gamestudio.entity.Game;
 import Gamestudio.service.FavoriteService;
 
 public class FavoriteServiceSORM implements FavoriteService {
@@ -36,6 +37,11 @@ public void removeFavorite(String username, String game) {
 public boolean isFavorite(String username, String game) {
 
 	return false;
+}
+@Override
+public List<Game> getFavoriteGames(String player) {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 
