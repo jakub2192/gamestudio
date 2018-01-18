@@ -26,10 +26,14 @@ public class UserController {
 	@Autowired
 	private RatingService ratingService;
 	@Autowired
+	private FavoriteService favoriteService;
+	@Autowired
 	private GameService gameService;
+
 
 	private Player loggedPlayer;
 	private String loginMessage;
+
 	public Player getLoggedPlayer() {
 		return loggedPlayer;
 	}
@@ -47,14 +51,15 @@ public class UserController {
 		return "index";
 	}
 
+
 	private void fillMethod(Model model) {
-
-		List<Game> games = gameService.getGames();
+		List<Game> games = gameService.getGames(); 
 		setRatingToGame(games);
+		
 		model.addAttribute("games", games);
-
 		if (isLogged()) {
-			model.addAttribute("favoriteByGame", gameService.getFavoriteGames(loggedPlayer.getLogin()));
+			model.addAttribute("favorite", favoriteService.getFavorite(loggedPlayer.getLogin()));
+//			model.addAttribute("favorite1", favoriteService.getFavoriteGames(getLoggedPlayer().getLogin()));
 		}
 
 	}
@@ -62,17 +67,17 @@ public class UserController {
 	@RequestMapping("/login")
 	public String login(Player player, Model model) {
 		loggedPlayer = playerService.login(player.getLogin(), player.getPassword());
-		loginMessage = "";
+loginMessage= "";
 		fillMethod(model);
 		return isLogged() ? "index" : "login";
 	}
 
 	@RequestMapping("/register")
 	public String register(Player player, Model model) {
-		if (!playerService.isPlayer(player.getLogin())) {
-			playerService.register(player);
-			loginMessage = "";
-			login(player, model);
+		if (!playerService.isPlayer(player.getLogin())) {			
+				playerService.register(player);
+				loginMessage = "";
+				login(player, model);
 		} else {
 			loginMessage = "Login already exists!!";
 		}
@@ -95,11 +100,10 @@ public class UserController {
 	public String getLoginMessage() {
 		return loginMessage;
 	}
-
-	public void setRatingToGame(List<Game> games) {
-		for (Game game : games) {
-			game.setAvgRating(ratingService.getAverageRating(game.getIdent()));
-		}
-
+public void  setRatingToGame(List<Game> games){
+	for (Game game : games) {
+		game.setAvgRating(ratingService.getAverageRating(game.getIdent()));
 	}
+	
+}
 }

@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import Gamestudio.entity.Favorite;
+import Gamestudio.entity.Game;
 import Gamestudio.service.FavoriteService;
 
 @Transactional
@@ -30,7 +31,10 @@ public class FavoriteServiceJPA implements FavoriteService {
 
 	}
 
-	
+	@Override
+	public List<Game> getFavoriteGames(String player) {
+		return entityManager.createQuery("SELECT g FROM Game g WHERE EXISTS (SELECT f FROM Favorite f where g.ident = f.game and f.username = :player").setParameter("player", player).getResultList();
+	}
 	
 	
 
