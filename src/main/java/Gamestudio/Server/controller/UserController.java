@@ -26,8 +26,6 @@ public class UserController {
 	@Autowired
 	private RatingService ratingService;
 	@Autowired
-	private FavoriteService favoriteService;
-	@Autowired
 	private GameService gameService;
 
 
@@ -58,10 +56,8 @@ public class UserController {
 		
 		model.addAttribute("games", games);
 		if (isLogged()) {
-			model.addAttribute("favorite", favoriteService.getFavorite(loggedPlayer.getLogin()));
-//			model.addAttribute("favorite1", favoriteService.getFavoriteGames(getLoggedPlayer().getLogin()));
+			model.addAttribute("favorite1", gameService.getFavoriteGames(getLoggedPlayer().getLogin()));
 		}
-
 	}
 
 	@RequestMapping("/login")

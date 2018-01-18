@@ -27,6 +27,9 @@ public class ServiceController {
 	@Autowired
 	protected FavoriteService favoriteService;
 	
+	
+
+	
 	@RequestMapping("/addComment")
 	public String addComment(Comment comment, Model model) {
 		if (!"".equals(comment.getContent())) {

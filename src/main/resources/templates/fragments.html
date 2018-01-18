@@ -6,22 +6,22 @@
 <a href='/'>Back to GameStudio</a>
 </div>
 
-<div class="rating_puzzle" th:fragment="rating_puzzle">
+<div class="rating_puzzle" th:fragment="rating">
 Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5
 </div>
 
-<div class="rating_mines" th:fragment="rating_mines">
-Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5
-</div>
+<!-- <div class="rating_mines" th:fragment="rating_mines"> -->
+<!-- Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5 -->
+<!-- </div> -->
 
-<div class="rating_guessNumber" th:fragment="rating_guess">
-Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5
-</div>
+<!-- <div class="rating_guessNumber" th:fragment="rating_guess"> -->
+<!-- Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5 -->
+<!-- </div> -->
 
-<div class="rating_sudoku" th:fragment="rating_sudoku">
-Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5
+<!-- <div class="rating_sudoku" th:fragment="rating_sudoku"> -->
+<!-- Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5 -->
 
-</div>
+<!-- </div> -->
 
 <div  th:fragment="favorite_table">
 <span th:if="${not @userController.logged}">Log in to add favorite.</span>
@@ -109,7 +109,32 @@ or
 				</span>
 </div>
 
+<div th:fragment="getGames(games)">
+<div class="container" th:each='game : ${games}'>
+		<div class="row">
 
+			<div class="col-3">
+				<img th:src='${"pictures/" + game.ident + ".jpg" }' height="200"
+					width="200" />
+			</div>
+			<div class="col-3">
+				<h5>
+					<span th:text='${game.name}'></span>
+				</h5>
+				<a th:href='${game.ident}'>Play</a> <br /> Average rating: <span
+					th:text='${game.avgRating}' />/5
+			</div>
+			<div class="col-6">
+				<h5>
+					<i><span th:text='${game.description}'></span></i>
+				</h5>
+			</div>
+		</div>
+		<hr />
+	</div>
+
+
+</div>
 
 
 

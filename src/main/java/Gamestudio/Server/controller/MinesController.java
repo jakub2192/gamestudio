@@ -47,7 +47,7 @@ public class MinesController extends AbstractGameController {
 	public String mines(Model model) {
 		marking = !marking;
 		fillMethod(model);
-		return getGameName();
+		return "game";
 	}
 
 	@RequestMapping("/mines")
@@ -55,7 +55,7 @@ public class MinesController extends AbstractGameController {
 			@RequestParam(value = "column", required = false) String column, Model model) {
 		processCommand(row, column);
 		fillMethod(model);
-		return getGameName();
+		return  "game";
 	}
 
 	@RequestMapping("/mines_easy")
@@ -63,7 +63,7 @@ public class MinesController extends AbstractGameController {
 		field = new Field(5, 5, 5);
 		fillMethod(model);
 		difficult = 1;
-		return getGameName();
+		return "game";
 	}
 
 	@RequestMapping("/mines_hard")
@@ -71,7 +71,7 @@ public class MinesController extends AbstractGameController {
 		field = new Field(15, 15, 20);
 		fillMethod(model);
 		difficult = 3;
-		return getGameName();
+		return "game";
 	}
 	public String render() {
 
@@ -112,6 +112,23 @@ public class MinesController extends AbstractGameController {
 		}
 
 		sb.append("</table>\n");
+		sb.append("<br/>");
+		sb.append("<div class ='buttons'>");
+		sb.append("<button onclick=\"window.location.href='/mines'\">New Game</button>\n");
+		sb.append("<button onclick=\"window.location.href='/mines_easy'\">Easy</button>\n");
+		sb.append("<button onclick=\"window.location.href='/mines_hard'\">Hard</button>\n");
+		sb.append("<button onclick=\"window.location.href='/mines_mark'\">\n");
+		sb.append("Action : \n");
+		if(isMarking()) {
+			sb.append("<span\">Mark</span>\n");
+		}else {
+			sb.append("<span\">Open</span>\n");
+		}
+		
+		sb.append("</button>\n");
+		sb.append("</div>\n");
+		
+		
 		return sb.toString();
 	}
 

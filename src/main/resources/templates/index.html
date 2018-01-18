@@ -21,46 +21,15 @@
 	<hr />
 	<span th:if="${@userController.logged}">
 		<h5>Favorite Games</h5>
-		<div class="container">
-			<div class="row">
-				<div class="col-3"></div>
-				<div class="col-9">
-					<table>
-						<th th:each='game : ${favorite1}'>
-						<tr>
-							<a th:href='${game.ident}'><img
-								th:src='${"pictures/" + game.ident + ".jpg" }' height="100"
-								width="100" /> </a>
-						</tr>
-						</th>
-					</table>
-				</div>
-			</div>
-		</div>
+		<div  th:replace="fragments::getGames(${favorite1})" /> 
+		
 		<hr />
 	</span>
 	<h5>All Games</h5>
-	<div class="container" th:each='game : ${games}'>
-		<div class="row">
+	
+	<div  th:replace="fragments::getGames(${games})" />
 
-			<div class="col-3">
-				<img th:src='${"pictures/" + game.ident + ".jpg" }' height="200"
-					width="200" />
-			</div>
-			<div class="col-3">
-				<h5>
-					<span th:text='${game.name}'></span>
-				</h5>
-				<a th:href='${game.ident}'>Play</a> <br /> Average rating: <span
-					th:text='${game.avgRating}' />/5
-			</div>
-			<div class="col-6">
-				<h5>
-					<i><span th:text='${game.description}'></span></i>
-				</h5>
-			</div>
-		</div>
-		<hr />
-	</div>
+	
+	
 </body>
 </html>

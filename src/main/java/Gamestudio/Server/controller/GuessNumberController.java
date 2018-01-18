@@ -11,6 +11,10 @@ import org.springframework.web.context.WebApplicationContext;
 import Gamestudio.entity.Comment;
 import Gamestudio.entity.Score;
 import Gamestudio.game.guessNumber.consoleUI.Field;
+import Gamestudio.game.minesweeper.core.Clue;
+import Gamestudio.game.minesweeper.core.GameState;
+import Gamestudio.game.minesweeper.core.Tile;
+import Gamestudio.game.minesweeper.core.TileState;
 import Gamestudio.service.CommentService;
 import Gamestudio.service.FavoriteService;
 import Gamestudio.service.RatingService;
@@ -22,9 +26,8 @@ public class GuessNumberController extends AbstractGameController {
 	private Field field;
 	private String message;
 	private String difficult;
+	private int difficultLevel;
 	int inputInt;
-	private int finalScore;
-
 
 	@Autowired
 	private ScoreService scoreService;
@@ -43,27 +46,29 @@ public class GuessNumberController extends AbstractGameController {
 	public String guessNumber(Model model) {
 		field = new Field(100);
 		difficult = "1 - 100";
+		difficultLevel= 2;
 		message = "";
 		fillMethod(model);
-		return getGameName();
+		return "game";
 	}
 
 	@RequestMapping("/guessNumber_easy")
 	public String guessNumberEasy(Model model) {
 		field = new Field(10);
 		difficult = "1 - 10";
+		difficultLevel = 1;
 		fillMethod(model);
-		return getGameName();
+		return "game";
 	}
 
 	@RequestMapping("/guessNumber_hard")
 	public String guessNumberHard(Model model) {
 		field = new Field(1000);
 		difficult = "1 - 1000";
+		difficultLevel = 3;
 		fillMethod(model);
-		return getGameName();
+		return "game";
 	}
-
 
 	@RequestMapping("/guessNumber_ask")
 	public String guessNumber(@RequestParam(value = "guess", required = false) String guess, Model model) {
@@ -82,19 +87,44 @@ public class GuessNumberController extends AbstractGameController {
 
 		}
 		fillMethod(model);
-		return getGameName();
+		return "game";
 	}
 
+	public String render() {
+
+		StringBuilder sb = new StringBuilder();
+			
+	sb.append("<div class='pic'>");
+	sb.append("	<img src=\"/pictures/guess.jpg\" style=\"visibility: hidden;\" />");
+	sb.append("	<form class='frmAsk' action=\"/guessNumber_ask.html\">");
+	sb.append("	<input type=\"text\" name=\"guess\" placeholder='Input'");
+	sb.append("	autofocus='autofocus' /><br /> <input type=\"submit\"");
+	sb.append("	value=\"Guess\" />");
+	sb.append(String.format("<p class=\"difficultSize\"> %s</p>" ,difficult ));
+	sb.append("	</form>");
+	sb.append("	</div>");
+	
+
+		sb.append("<div class ='buttons'>");
+		sb.append("<button onclick=\"window.location.href='/guessNumber'\">New Game</button>\n");
+		sb.append("<button onclick=\"window.location.href='/guessNumber_easy'\">Easy</button>\n");
+		sb.append("<button onclick=\"window.location.href='/guessNumber_hard'\">Hard</button>\n");	
+		sb.append("</div>\n");
+		sb.append("<br/>");
+		
+		return sb.toString();
+	}
 
 	public void saveScore() {
+		int finalScore = 0;
 		int time = (int) (field.getEndTime() - field.getStartTime()) / 1000;
-		if ("1-10".equals(difficult)) {
+		if (difficultLevel == 1) {
 			finalScore = 300 - time;
 		}
-		if ("1-100".equals(difficult)) {
+		if (difficultLevel == 2) {
 			finalScore = 500 - time;
 		}
-		if ("1-1000".equals(difficult)) {
+		if (difficultLevel == 3) {
 			finalScore = 1000 - time;
 		}
 		Score score = new Score();
