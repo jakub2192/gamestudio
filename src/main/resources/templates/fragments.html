@@ -10,18 +10,6 @@
 Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5
 </div>
 
-<!-- <div class="rating_mines" th:fragment="rating_mines"> -->
-<!-- Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5 -->
-<!-- </div> -->
-
-<!-- <div class="rating_guessNumber" th:fragment="rating_guess"> -->
-<!-- Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5 -->
-<!-- </div> -->
-
-<!-- <div class="rating_sudoku" th:fragment="rating_sudoku"> -->
-<!-- Average rating: <span th:text="${#numbers.formatDecimal(rating,1,2)}"/>/5 -->
-
-<!-- </div> -->
 
 <div  th:fragment="favorite_table">
 <span th:if="${not @userController.logged}">Log in to add favorite.</span>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="css/normalize.css" />
+<link rel="stylesheet" href="css/myCssStyle.css" />
+<link rel="stylesheet" href="css/bootstrap.css" />
+<meta charset="ISO-8859-1" />
+<title>Login</title>
+</head>
+<body>
+<header>
+		<div th:replace="fragments::header"/>
+
+	</header>
+	<table class="playerTable">
+					<tbody>
+						<tr>
+							<th>USername</th>
+							<th>Email</th>
+							<th>Password</th>
+						</tr>
+						<tr  th:each='player : ${allPlayers}'>
+							<td th:text='${player.login}' />
+							<td th:text='${player.email}' />
+							<td th:text='${player.password}' />
+						</tr>
+					</tbody>
+				</table>
+</body>
+</html>

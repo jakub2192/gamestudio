@@ -16,7 +16,12 @@
 			<a href="about.html">About</a>
 			<div id='right' th:replace="fragments::nice_footer" />
 		</div>
-
+		<span th:if="${admin}">
+		<a href="admin.html">
+		Admin</a>
+		</span>
+		
+             
 	</header>
 	<hr />
 	<span th:if="${@userController.logged}">

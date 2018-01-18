@@ -49,13 +49,20 @@ public class UserController {
 		return "index";
 	}
 
+	@RequestMapping("/admin")
+	public String admin(Model model) {
+		fillMethod(model);
+		return "admin";
+	}
+
 
 	private void fillMethod(Model model) {
 		List<Game> games = gameService.getGames(); 
 		setRatingToGame(games);
-		
 		model.addAttribute("games", games);
 		if (isLogged()) {
+			model.addAttribute("allPlayers", playerService.getPlayers());
+			model.addAttribute("admin", playerService.isAdmin(getLoggedPlayer().getLogin()));
 			model.addAttribute("favorite1", gameService.getFavoriteGames(getLoggedPlayer().getLogin()));
 		}
 	}

@@ -1,11 +1,14 @@
 package Gamestudio.service.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import Gamestudio.entity.Player;
+import Gamestudio.entity.Score;
 import Gamestudio.service.PlayerService;
 
 @Transactional
@@ -49,6 +52,24 @@ public class PlayerServiceJPA implements PlayerService {
 			 entityManager
 					.createQuery("SELECT p FROM Player p WHERE p.login = :login ")
 					.setParameter("login", login).getSingleResult();
+		} catch (NoResultException e) {
+			return false;
+
+		}
+		return true;
+
+	}
+	@Override
+	public List<Player> getPlayers() {	
+		return entityManager.createQuery("SELECT p FROM Player p ")
+				.getResultList();
+	}
+	@Override
+	public boolean isAdmin(String login) {
+		try {
+			 entityManager
+					.createQuery("SELECT p FROM Player p WHERE p.login = :admin AND p.login = :login ").setParameter("login", login)
+					.setParameter("admin", "admin").getSingleResult();
 		} catch (NoResultException e) {
 			return false;
 
