@@ -7,13 +7,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
-import Gamestudio.entity.Comment;
 import Gamestudio.entity.Game;
 import Gamestudio.entity.Player;
-import Gamestudio.service.FavoriteService;
 import Gamestudio.service.GameService;
 import Gamestudio.service.PlayerService;
 import Gamestudio.service.RatingService;

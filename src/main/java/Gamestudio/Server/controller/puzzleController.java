@@ -10,9 +10,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import Gamestudio.entity.Score;
 import Gamestudio.game.puzzle.core.Field;
-import Gamestudio.service.CommentService;
-import Gamestudio.service.FavoriteService;
-import Gamestudio.service.RatingService;
 import Gamestudio.service.ScoreService;
 
 @Controller

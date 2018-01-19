@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import Gamestudio.entity.Player;
-import Gamestudio.entity.Score;
 import Gamestudio.service.PlayerService;
 
 @Transactional

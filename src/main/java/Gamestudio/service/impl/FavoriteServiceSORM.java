@@ -3,7 +3,6 @@ package Gamestudio.service.impl;
 import java.util.List;
 
 import Gamestudio.entity.Favorite;
-import Gamestudio.entity.Game;
 import Gamestudio.service.FavoriteService;
 
 public class FavoriteServiceSORM implements FavoriteService {

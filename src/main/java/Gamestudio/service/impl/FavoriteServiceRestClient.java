@@ -10,7 +10,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import Gamestudio.entity.Favorite;
-import Gamestudio.entity.Game;
 import Gamestudio.service.FavoriteService;
 
 public class FavoriteServiceRestClient implements FavoriteService {

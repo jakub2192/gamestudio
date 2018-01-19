@@ -8,18 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
-import Gamestudio.entity.Comment;
-import Gamestudio.entity.Favorite;
-import Gamestudio.entity.Rating;
 import Gamestudio.entity.Score;
 import Gamestudio.game.minesweeper.core.Clue;
 import Gamestudio.game.minesweeper.core.Field;
 import Gamestudio.game.minesweeper.core.GameState;
 import Gamestudio.game.minesweeper.core.Tile;
 import Gamestudio.game.minesweeper.core.TileState;
-import Gamestudio.service.CommentService;
-import Gamestudio.service.FavoriteService;
-import Gamestudio.service.RatingService;
 import Gamestudio.service.ScoreService;
 
 @Controller
@@ -55,12 +49,13 @@ public class MinesController extends AbstractGameController {
 			@RequestParam(value = "column", required = false) String column, Model model) {
 		processCommand(row, column);
 		fillMethod(model);
+		
 		return  "game";
 	}
 
 	@RequestMapping("/mines_easy")
 	public String mines_easy(Model model) {
-		field = new Field(5, 5, 5);
+		field = new Field(5, 5, 1);
 		fillMethod(model);
 		difficult = 1;
 		return "game";

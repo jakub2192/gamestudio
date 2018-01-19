@@ -8,15 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
-import Gamestudio.entity.Comment;
-import Gamestudio.entity.Favorite;
-import Gamestudio.entity.Rating;
 import Gamestudio.entity.Score;
 import Gamestudio.game.sudoku.model.Game;
 import Gamestudio.game.sudoku.view.Field;
-import Gamestudio.service.CommentService;
-import Gamestudio.service.FavoriteService;
-import Gamestudio.service.RatingService;
 import Gamestudio.service.ScoreService;
 
 @Controller

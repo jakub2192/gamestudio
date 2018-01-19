@@ -8,16 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 
-import Gamestudio.entity.Comment;
 import Gamestudio.entity.Score;
 import Gamestudio.game.guessNumber.consoleUI.Field;
-import Gamestudio.game.minesweeper.core.Clue;
-import Gamestudio.game.minesweeper.core.GameState;
-import Gamestudio.game.minesweeper.core.Tile;
-import Gamestudio.game.minesweeper.core.TileState;
-import Gamestudio.service.CommentService;
-import Gamestudio.service.FavoriteService;
-import Gamestudio.service.RatingService;
 import Gamestudio.service.ScoreService;
 
 @Controller

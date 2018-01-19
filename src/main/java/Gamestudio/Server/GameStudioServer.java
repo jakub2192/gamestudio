@@ -1,9 +1,12 @@
 package Gamestudio.Server;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.ws.config.annotation.EnableWs;
 
 import Gamestudio.service.CommentService;
 import Gamestudio.service.FavoriteService;
@@ -18,8 +21,12 @@ import Gamestudio.service.impl.PlayerServiceJPA;
 import Gamestudio.service.impl.RatingServiceJPA;
 import Gamestudio.service.impl.ScoreServiceJPA;
 
+
+
 @SpringBootApplication
-// @EnableWs
+@ComponentScan
+//@EnableWs
+@EnableAutoConfiguration
 @EntityScan({ "Gamestudio.entity" })
 public class GameStudioServer {
 	public static void main(String[] args) {

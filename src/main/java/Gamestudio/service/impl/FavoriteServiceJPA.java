@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import Gamestudio.entity.Favorite;
-import Gamestudio.entity.Game;
 import Gamestudio.service.FavoriteService;
 
 @Transactional

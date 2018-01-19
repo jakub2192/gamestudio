@@ -55,5 +55,8 @@ li{
 	border: solid;
 	border-color: white;
 }
+.playerTable td{
+	border: solid;
+}
 
 
